@@ -10,6 +10,7 @@ public class FollowCam : MonoBehaviour
     [SerializeField] float _smooth_factor;
     [SerializeField] Quaternion _turn_angle;
     [SerializeField] float _rotation_speed = 0.5f;
+    [SerializeField] bool _changing_target = false;
 
     void Start()
     {
@@ -19,12 +20,27 @@ public class FollowCam : MonoBehaviour
 
     void LateUpdate()
     {
-        CamControl();
+        if (_changing_target)
+        {
+            Vector3 start_pos = this.transform.position;
+            Vector3 end_pos = _following.transform.position + _offset;
+            this.transform.position = Vector3.Lerp(start_pos, end_pos, Time.deltaTime * 5f);
+            if(Tools.V3Equal(this.transform.position, end_pos))
+            {
+                _changing_target = false;
+            }
+        }
+        else
+        {
+            CamControl();
+        }
+        
     }
 
     public void SwitchTarget(GameObject obj)
     {
         _following = obj;
+        _changing_target = true;
     }
 
     private void CamControl()

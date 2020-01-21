@@ -32,6 +32,7 @@ public class CaptureManager : MonoBehaviour
     [SerializeField] GameObject _second_camera;
     [SerializeField] float _final_zoom_duration = .5f;
 
+    [SerializeField] Camera _follow_cam_ref;
     [SerializeField] Pokeball _pokeball_ref;
 
     //[Space]
@@ -64,25 +65,19 @@ public class CaptureManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            ThrowPokeball();
-        }
-
-        if (Input.GetKey(KeyCode.S))
-        {
-            Time.timeScale = .5f;
-        }
-        else
-        {
-            Time.timeScale = 1;
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    ThrowPokeball();
+        //}
 
         _second_camera.transform.LookAt(_pokeball);
     }
 
     public void ThrowPokeball()
     {
+        // set the follow cam to inactive and the main camera to active
+        _follow_cam_ref.gameObject.SetActive(false);
+        Camera.main.gameObject.SetActive(true);
 
         Sequence throwSequence = DOTween.Sequence();
 

@@ -12,4 +12,12 @@ public class Sphere : MonoBehaviour
             _follow_cam_ref.SwitchTarget(collision.gameObject);
         }
     }
+
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        _follow_cam_ref.SwitchTarget(GameObject.FindGameObjectWithTag("Next Object"));
+    //    }
+    //}
 }
