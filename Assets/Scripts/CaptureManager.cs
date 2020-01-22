@@ -10,6 +10,7 @@ public class CaptureManager : MonoBehaviour
     [Header("Public References")]
     [SerializeField] Transform _pokeball;
     [SerializeField] Transform _pokemon;
+    [SerializeField] Transform _test;
     [Space]
     [Header("Throw Settings")]
     ////[SerializeField] float throwArc;
@@ -35,6 +36,8 @@ public class CaptureManager : MonoBehaviour
     [SerializeField] Camera _follow_cam_ref;
     [SerializeField] Pokeball _pokeball_ref;
 
+    [SerializeField] Camera _main_cam;
+
     //[Space]
     //[Header("Particles")]
     //public ParticleSystemForceField forceField;
@@ -59,7 +62,7 @@ public class CaptureManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //_pokeball.position = _test.position;
     }
 
     // Update is called once per frame
@@ -76,8 +79,9 @@ public class CaptureManager : MonoBehaviour
     public void ThrowPokeball()
     {
         // set the follow cam to inactive and the main camera to active
+        _main_cam.gameObject.SetActive(true);
         _follow_cam_ref.gameObject.SetActive(false);
-        Camera.main.gameObject.SetActive(true);
+        
 
         Sequence throwSequence = DOTween.Sequence();
 
@@ -90,7 +94,7 @@ public class CaptureManager : MonoBehaviour
 
         //Pokeball Jump
         throwSequence.Append(_pokeball.DOJump(_jump_to.position, _jump_power, 1, _jump_duration));
-        throwSequence.Join(_pokeball.DOLookAt(_pokemon.position, _jump_duration));
+        throwSequence.Join(_pokeball.DOLookAt(_pokemon.localPosition.normalized, _jump_duration));
 
         //throwSequence.AppendCallback(() => throwParticle.Stop());
         //throwSequence.AppendCallback(() => firstCircle.Play());
@@ -128,7 +132,7 @@ public class CaptureManager : MonoBehaviour
         throwSequence.AppendInterval(.3f);
 
         //Pokeball Fall
-        throwSequence.Append(_pokeball.DOMoveY(-0.4f, _fall_duration).SetEase(Ease.OutBounce));
+        throwSequence.Append(_pokeball.DOMoveY(4.17f, _fall_duration).SetEase(Ease.OutBounce));
         throwSequence.Join(_pokeball.DOPunchRotation(new Vector3(-40, 0, 0), _fall_duration, 5, 10));
     }
 
@@ -140,22 +144,22 @@ public class CaptureManager : MonoBehaviour
     private void ChangeCamera()
     {
         _second_camera.SetActive(true);
-        Camera.main.gameObject.SetActive(false);
+        _main_cam.gameObject.SetActive(false);
 
         Transform cam = _second_camera.transform;
 
         Sequence cameraSequence = DOTween.Sequence();
-        cameraSequence.Append(cam.DOMoveY(.3f, 1.5f)).SetDelay(.5f);
+        cameraSequence.Append(cam.DOMoveY(4.7f, 1.5f)).SetDelay(.5f);
 
         cameraSequence.AppendInterval(.5f);
-        cameraSequence.Append(cam.DOMoveZ(.3f, _final_zoom_duration).SetEase(Ease.InExpo));
+        cameraSequence.Append(cam.DOMoveZ(-40f, _final_zoom_duration).SetEase(Ease.InExpo));
 
         //Particle
         //cameraSequence.AppendCallback(() => yellowBlink.Play());
         cameraSequence.Join(_pokeball.DOShakeRotation(.5f, 30, 8, 70, true));
 
         cameraSequence.AppendInterval(.8f);
-        cameraSequence.Append(cam.DOMoveZ(-0.5f, _final_zoom_duration).SetEase(Ease.InExpo));
+        cameraSequence.Append(cam.DOMoveZ(-40f, _final_zoom_duration).SetEase(Ease.InExpo));
 
 
         //Particle
@@ -163,7 +167,7 @@ public class CaptureManager : MonoBehaviour
         cameraSequence.Join(_pokeball.DOShakeRotation(.5f, 20, 8, 70, true));
 
         cameraSequence.AppendInterval(1.2f);
-        cameraSequence.Append(cam.DOMoveZ(-1.0f, _final_zoom_duration).SetEase(Ease.InExpo));
+        cameraSequence.Append(cam.DOMoveZ(-40f, _final_zoom_duration).SetEase(Ease.InExpo));
 
         //Particle
         //cameraSequence.AppendCallback(() => yellowBlink.Play());

@@ -22,6 +22,7 @@ public class Pokeball : MonoBehaviour
         if(collision.gameObject.tag == "Pokemon")
         {
             _capture_manager.hit_offset = collision.transform.position;
+            pokeball_rb.isKinematic = true;
             _capture_manager.ThrowPokeball();
         }
         if(collision.gameObject.tag == "Cannon")
