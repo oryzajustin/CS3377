@@ -14,6 +14,8 @@ public class Wedge : MonoBehaviour
     [SerializeField] GameObject _cable_solver_ref;
     [SerializeField] Bounds _bounds;
 
+    [SerializeField] FollowCam _follow_cam_ref;
+    [SerializeField] GameObject _weight;
     private void Start()
     {
         _bounds = GetComponent<MeshRenderer>().bounds;
@@ -83,7 +85,7 @@ public class Wedge : MonoBehaviour
         rb.isKinematic = false;
         rb.constraints = RigidbodyConstraints.FreezePositionY | RigidbodyConstraints.FreezePositionZ;
         rb.mass = 0.2f;
-        rb.drag = 2.5f;
+        rb.drag = 1.0f;
         rb.angularDrag = 3.0f;
         MeshCollider collider = go.AddComponent<MeshCollider>(); // add collider
         collider.convex = true;

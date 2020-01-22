@@ -10,14 +10,8 @@ public class Sphere : MonoBehaviour
         if(collision.gameObject.tag == "Next Object")
         {
             _follow_cam_ref.SwitchTarget(collision.gameObject);
+
+            this.GetComponent<Rigidbody>().angularDrag = 20.0f;
         }
     }
-
-    //private void Update()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        _follow_cam_ref.SwitchTarget(GameObject.FindGameObjectWithTag("Next Object"));
-    //    }
-    //}
 }

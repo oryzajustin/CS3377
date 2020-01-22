@@ -7,6 +7,8 @@ TagManager:
   - Pokemon
   - Next Object
   - Cable Anchor
+  - Star
+  - Cannon
   layers:
   - Default
   - TransparentFX
