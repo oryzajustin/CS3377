@@ -9,6 +9,8 @@ TagManager:
   - Cable Anchor
   - Star
   - Cannon
+  - Initial
+  - Pegboard
   layers:
   - Default
   - TransparentFX

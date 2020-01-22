@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 using System;
 
+// Class modified from Mix and Jam's recreation of the pokeball shake mechanic from Let's Go: Pikachu.
 public class CaptureManager : MonoBehaviour
 {
     [Header("Public References")]
@@ -37,6 +38,8 @@ public class CaptureManager : MonoBehaviour
     [SerializeField] Pokeball _pokeball_ref;
 
     [SerializeField] Camera _main_cam;
+
+    private List<AudioSource> _pokeball_sound_effects;
 
     //[Space]
     //[Header("Particles")]
@@ -78,6 +81,8 @@ public class CaptureManager : MonoBehaviour
 
     public void ThrowPokeball()
     {
+        _pokeball_sound_effects = _pokeball_ref.GetSoundEffects();
+
         // set the follow cam to inactive and the main camera to active
         _main_cam.gameObject.SetActive(true);
         _follow_cam_ref.gameObject.SetActive(false);
@@ -105,10 +110,11 @@ public class CaptureManager : MonoBehaviour
         //Pokemon Disappear
         throwSequence.AppendCallback(() => PokemonDisappear());
 
+        _pokeball_sound_effects[0].Play();
+
         //Pokeball Open
         throwSequence.Append(_pokeball.GetChild(0).GetChild(0).DOLocalRotate(new Vector3(-_open_angle, 0, 0), _open_duration).SetEase(Ease.OutBack));
         throwSequence.Join(_pokeball.GetChild(1).DOLocalRotate(new Vector3(_open_angle, 0, 0), _open_duration).SetEase(Ease.OutBack));
-
         //throwSequence.AppendCallback(() => forceField.gameObject.SetActive(true));
         //throwSequence.Join(firstDust.transform.DORotate(new Vector3(0, 0, 100), .5f, RotateMode.FastBeyond360));
 
@@ -151,40 +157,48 @@ public class CaptureManager : MonoBehaviour
         Sequence cameraSequence = DOTween.Sequence();
         cameraSequence.Append(cam.DOMoveY(4.7f, 1.5f)).SetDelay(.5f);
 
+        //first shake
         cameraSequence.AppendInterval(.5f);
-        cameraSequence.Append(cam.DOMoveZ(-40f, _final_zoom_duration).SetEase(Ease.InExpo));
+        cameraSequence.Append(cam.DOMoveZ(-43f, _final_zoom_duration).SetEase(Ease.InExpo));
 
         //Particle
         //cameraSequence.AppendCallback(() => yellowBlink.Play());
+        cameraSequence.AppendCallback(() => _pokeball_sound_effects[1].Play());
         cameraSequence.Join(_pokeball.DOShakeRotation(.5f, 30, 8, 70, true));
 
+        //second shake
         cameraSequence.AppendInterval(.8f);
-        cameraSequence.Append(cam.DOMoveZ(-40f, _final_zoom_duration).SetEase(Ease.InExpo));
-
+        cameraSequence.Append(cam.DOMoveZ(-43.2f, _final_zoom_duration).SetEase(Ease.InExpo));
 
         //Particle
         //cameraSequence.AppendCallback(() => yellowBlink.Play());
+        cameraSequence.AppendCallback(() => _pokeball_sound_effects[1].Play());
         cameraSequence.Join(_pokeball.DOShakeRotation(.5f, 20, 8, 70, true));
 
+        //third shake
         cameraSequence.AppendInterval(1.2f);
-        cameraSequence.Append(cam.DOMoveZ(-40f, _final_zoom_duration).SetEase(Ease.InExpo));
+        cameraSequence.Append(cam.DOMoveZ(-43.6f, _final_zoom_duration).SetEase(Ease.InExpo));
 
         //Particle
         //cameraSequence.AppendCallback(() => yellowBlink.Play());
+        cameraSequence.AppendCallback(() => _pokeball_sound_effects[1].Play());
         cameraSequence.Join(_pokeball.DOShakeRotation(.5f, 10, 8, 70, true));
-
+        
+        //click
         cameraSequence.AppendInterval(.8f);
 
         //Particle
         //cameraSequence.AppendCallback(() => blueBlink.Play());
         //cameraSequence.AppendCallback(() => finalCircle.Play());
         //cameraSequence.AppendCallback(() => stars.Play());
+        cameraSequence.AppendCallback(() => _pokeball_sound_effects[3].Play());
         cameraSequence.AppendCallback(() => _second_camera.transform.DOShakePosition(.2f, .1f, 7, 90, false, true));
 
         cameraSequence.Append(_pokeball.DOPunchRotation(new Vector3(-10, 0, 0), .5f, 8, 1));
 
-
-
+        // success
+        cameraSequence.AppendInterval(.8f);
+        cameraSequence.AppendCallback(() => _pokeball_sound_effects[4].Play());
     }
 
     private void OnDrawGizmos()

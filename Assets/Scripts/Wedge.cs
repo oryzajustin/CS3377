@@ -48,6 +48,7 @@ public class Wedge : MonoBehaviour
                     GameObject bottom = hull.CreateLowerHull(hits[i].gameObject, crossMaterial);
                     GameObject top = hull.CreateUpperHull(hits[i].gameObject, crossMaterial);
 
+                    // place the bottom object into the heirarchy, and rename for debugging purposes
                     bottom.transform.SetParent(_cable_solver_ref.transform);
                     bottom.name = "HELLO";
                     bottom.AddComponent<CablePoint>();
