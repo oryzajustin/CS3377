@@ -6,4 +6,4 @@ Rube Goldberg Machine
 - Machine Goal: Catch Pokemon
 
 # Video Footage
-tiny.cc/devfootage
+https://drive.google.com/drive/folders/0B54vCSpey_UILTNtQjVWbE52a2s?usp=sharing
