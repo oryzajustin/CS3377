@@ -6,6 +6,7 @@ public class Star : MonoBehaviour
 {
     [SerializeField] FollowCam _follow_cam_ref;
     [SerializeField] AudioSource _pokeball_audio;
+    [SerializeField] AudioSource _theme;
     void Update()
     {
         transform.Rotate(Vector3.forward * (80.0f * Time.deltaTime));
@@ -18,7 +19,7 @@ public class Star : MonoBehaviour
         {
             // call rainbow function from the follow cam, pause the overworld music, play the star theme attached to the pokeball
             _follow_cam_ref.StartRainbow();
-            _follow_cam_ref.gameObject.transform.GetChild(0).GetComponent<AudioSource>().Pause();
+            _theme.Pause();
             _pokeball_audio.Play();
             Destroy(this.gameObject);
         }

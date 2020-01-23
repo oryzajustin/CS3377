@@ -15,10 +15,11 @@ public class FollowCam : MonoBehaviour
     [SerializeField] Color _default_color;
 
     [SerializeField] AudioSource _pokeball_audio;
+    [SerializeField] AudioSource _theme;
 
     private Camera _self_cam;
     private float _time_left = 0.5f;
-    private float _star_timer = 7.0f;
+    private float _star_timer = 5.0f;
     private bool _rainbow = false;
 
     private Vector3 _origin_position;
@@ -64,7 +65,7 @@ public class FollowCam : MonoBehaviour
                 _rainbow = false;
                 _self_cam.backgroundColor = _default_color;
                 _pokeball_audio.Stop();
-                this.transform.GetChild(0).GetComponent<AudioSource>().UnPause();
+                _theme.UnPause();
             }
         }
 

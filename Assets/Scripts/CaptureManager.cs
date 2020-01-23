@@ -39,6 +39,8 @@ public class CaptureManager : MonoBehaviour
 
     [SerializeField] Camera _main_cam;
 
+    [SerializeField] AudioSource _theme;
+
     private List<AudioSource> _pokeball_sound_effects;
 
     //[Space]
@@ -82,6 +84,7 @@ public class CaptureManager : MonoBehaviour
     public void ThrowPokeball()
     {
         _pokeball_sound_effects = _pokeball_ref.GetSoundEffects();
+        _theme.volume = 0.05f;
 
         // set the follow cam to inactive and the main camera to active
         _main_cam.gameObject.SetActive(true);
@@ -198,6 +201,7 @@ public class CaptureManager : MonoBehaviour
 
         // success
         cameraSequence.AppendInterval(.8f);
+        cameraSequence.AppendCallback(() => _theme.Stop());
         cameraSequence.AppendCallback(() => _pokeball_sound_effects[4].Play());
     }
 

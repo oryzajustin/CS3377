@@ -16,6 +16,9 @@ public class Wedge : MonoBehaviour
 
     [SerializeField] FollowCam _follow_cam_ref;
     [SerializeField] GameObject _weight;
+
+    [SerializeField] AudioSource _slice_audio;
+
     private void Start()
     {
         _bounds = GetComponent<MeshRenderer>().bounds;
@@ -44,6 +47,9 @@ public class Wedge : MonoBehaviour
                 SlicedHull hull = SliceObject(hits[i].gameObject, crossMaterial);
                 if (hull != null)
                 {
+                    // play slice sound
+                    _slice_audio.Play();
+
                     // slice into top and bottom
                     GameObject bottom = hull.CreateLowerHull(hits[i].gameObject, crossMaterial);
                     GameObject top = hull.CreateUpperHull(hits[i].gameObject, crossMaterial);
