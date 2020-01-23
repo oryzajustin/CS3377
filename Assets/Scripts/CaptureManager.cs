@@ -58,11 +58,11 @@ public class CaptureManager : MonoBehaviour
     //public ParticleSystem capture2;
     //public ParticleSystem capture3;
 
-    //[Space]
+    [Space]
     //public ParticleSystem yellowBlink;
     //public ParticleSystem blueBlink;
     //public ParticleSystem finalCircle;
-    //public ParticleSystem stars;
+    public ParticleSystem stars;
 
     // Start is called before the first frame update
     void Start()
@@ -193,7 +193,7 @@ public class CaptureManager : MonoBehaviour
         //Particle
         //cameraSequence.AppendCallback(() => blueBlink.Play());
         //cameraSequence.AppendCallback(() => finalCircle.Play());
-        //cameraSequence.AppendCallback(() => stars.Play());
+        cameraSequence.AppendCallback(() => stars.Play());
         cameraSequence.AppendCallback(() => _pokeball_sound_effects[3].Play());
         cameraSequence.AppendCallback(() => _second_camera.transform.DOShakePosition(.2f, .1f, 7, 90, false, true));
 
