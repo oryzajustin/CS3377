@@ -18,9 +18,9 @@ public class FollowCam : MonoBehaviour
     [SerializeField] AudioSource _theme;
 
     private Camera _self_cam;
-    private float _time_left = 0.5f;
-    private float _star_timer = 5.0f;
-    private bool _rainbow = false;
+    //private float _time_left = 0.5f;
+    //private float _star_timer = 5.0f;
+    //private bool _rainbow = false;
 
     private Vector3 _origin_position;
     private Quaternion _origin_rotation;
@@ -53,21 +53,21 @@ public class FollowCam : MonoBehaviour
             CamControl();
         }
 
-        if (_rainbow)
-        {
-            _star_timer -= Time.deltaTime;
-            if (_star_timer > 0)
-            {
-                RainbowTime();
-            }
-            else
-            {
-                _rainbow = false;
-                _self_cam.backgroundColor = _default_color;
-                _pokeball_audio.Stop();
-                _theme.volume = 0.1f;
-            }
-        }
+        //if (_rainbow)
+        //{
+        //    _star_timer -= Time.deltaTime;
+        //    if (_star_timer > 0)
+        //    {
+        //        RainbowTime();
+        //    }
+        //    else
+        //    {
+        //        _rainbow = false;
+        //        _self_cam.backgroundColor = _default_color;
+        //        _pokeball_audio.Stop();
+        //        _theme.volume = 0.1f;
+        //    }
+        //}
 
         if (_shake_intensity > 0)
         {
@@ -81,26 +81,26 @@ public class FollowCam : MonoBehaviour
         }
     }
 
-    public void StartRainbow()
-    {
-        _rainbow = true;
-    }
+    //public void StartRainbow()
+    //{
+    //    _rainbow = true;
+    //}
 
-    private void RainbowTime()
-    {
-        _time_left -= Time.deltaTime;
-        if (_time_left < 0)
-        {
-            Rainbow();
-            _time_left = 0.25f;
-        }
-    }
+    //private void RainbowTime()
+    //{
+    //    _time_left -= Time.deltaTime;
+    //    if (_time_left < 0)
+    //    {
+    //        Rainbow();
+    //        _time_left = 0.25f;
+    //    }
+    //}
 
-    private void Rainbow()
-    {
-        Color new_color = new Color(Random.value, Random.value, Random.value);
-        _self_cam.backgroundColor = new_color;
-    }
+    //private void Rainbow()
+    //{
+    //    Color new_color = new Color(Random.value, Random.value, Random.value);
+    //    _self_cam.backgroundColor = new_color;
+    //}
 
     public void SwitchTarget(GameObject obj)
     {
