@@ -19,7 +19,7 @@ public class Star : MonoBehaviour
         {
             // call rainbow function from the follow cam, pause the overworld music, play the star theme attached to the pokeball
             _follow_cam_ref.StartRainbow();
-            _theme.Pause();
+            _theme.volume = 0.05f;
             _pokeball_audio.Play();
             Destroy(this.gameObject);
         }

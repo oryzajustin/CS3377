@@ -43,15 +43,15 @@ public class CaptureManager : MonoBehaviour
 
     private List<AudioSource> _pokeball_sound_effects;
 
-    //[Space]
-    //[Header("Particles")]
-    //public ParticleSystemForceField forceField;
+    [Space]
+    [Header("Particles")]
+    public ParticleSystemForceField forceField;
     //public ParticleSystem throwParticle;
-    //public ParticleSystem firstLines;
-    //public ParticleSystem firstCircle;
+    public ParticleSystem firstLines;
+    public ParticleSystem firstCircle;
     //public ParticleSystem firstFlash;
-    //public ParticleSystem firstDust;
-    //public ParticleSystem beam;
+    public ParticleSystem firstDust;
+    public ParticleSystem beam;
 
     //[Space]
     //public ParticleSystem capture1;
@@ -67,7 +67,7 @@ public class CaptureManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //_pokeball.position = _test.position;
+        //_pokeball.position = _test.position; // used for debugging
     }
 
     // Update is called once per frame
@@ -105,10 +105,10 @@ public class CaptureManager : MonoBehaviour
         throwSequence.Join(_pokeball.DOLookAt(_pokemon.localPosition.normalized, _jump_duration));
 
         //throwSequence.AppendCallback(() => throwParticle.Stop());
-        //throwSequence.AppendCallback(() => firstCircle.Play());
-        //throwSequence.AppendCallback(() => firstLines.Play());
+        throwSequence.AppendCallback(() => firstCircle.Play());
+        throwSequence.AppendCallback(() => firstLines.Play());
         //throwSequence.AppendCallback(() => firstFlash.Play());
-        //throwSequence.AppendCallback(() => firstDust.Play());
+        throwSequence.AppendCallback(() => firstDust.Play());
 
         //Pokemon Disappear
         throwSequence.AppendCallback(() => PokemonDisappear());
@@ -118,10 +118,10 @@ public class CaptureManager : MonoBehaviour
         //Pokeball Open
         throwSequence.Append(_pokeball.GetChild(0).GetChild(0).DOLocalRotate(new Vector3(-_open_angle, 0, 0), _open_duration).SetEase(Ease.OutBack));
         throwSequence.Join(_pokeball.GetChild(1).DOLocalRotate(new Vector3(_open_angle, 0, 0), _open_duration).SetEase(Ease.OutBack));
-        //throwSequence.AppendCallback(() => forceField.gameObject.SetActive(true));
-        //throwSequence.Join(firstDust.transform.DORotate(new Vector3(0, 0, 100), .5f, RotateMode.FastBeyond360));
+        throwSequence.AppendCallback(() => forceField.gameObject.SetActive(true));
+        throwSequence.Join(firstDust.transform.DORotate(new Vector3(0, 0, 100), .5f, RotateMode.FastBeyond360));
 
-        //throwSequence.Join(beam.transform.DOMove(jumpPosition.position, .2f));
+        throwSequence.Join(beam.transform.DOMove(_jump_to.position, .2f));
 
         //Camera Change
         throwSequence.AppendCallback(() => ChangeCamera());

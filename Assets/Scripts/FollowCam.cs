@@ -65,7 +65,7 @@ public class FollowCam : MonoBehaviour
                 _rainbow = false;
                 _self_cam.backgroundColor = _default_color;
                 _pokeball_audio.Stop();
-                _theme.UnPause();
+                _theme.volume = 0.1f;
             }
         }
 
